@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated"
+}
+
+datasource db {
+  provider = "postgresql"
+  schemas  = ["bread_shop"]
+}
+
+model Position {
+  id        Int        @id @default(autoincrement())
+  name      String
+  cost      Int
+  isActive  Boolean @map("is_active")
+  purchases Purchase[]
+
+  @@map("position")
+  @@schema("bread_shop")
+}
+
+model Customer {
+  id          Int        @id @default(autoincrement())
+  name        String
+  sumCost     Int @map("sum_cost")
+  salePrecent Int @map("sale_precent")
+  purchases   Purchase[]
+
+  @@map("customer")
+  @@schema("bread_shop")
+}
+
+model Purchase {
+  id         Int @id @default(autoincrement())
+  customerId Int @map("customer_id")
+  positionId Int @map("position_id")
+
+  customer Customer @relation(fields: [customerId], references: [id])
+  position Position @relation(fields: [positionId], references: [id])
+
+  @@map("purchase")
+  @@schema("bread_shop")
+}

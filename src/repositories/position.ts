@@ -5,5 +5,3 @@ export class PositionRepository {
     return prisma.position.findMany();
   }
 }
-
-export default PositionRepository;

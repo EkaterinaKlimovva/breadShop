@@ -3,6 +3,7 @@ import type { Server } from 'node:net';
 import router from '../api/routes';
 import config from '../config/config';
 import { prisma } from '../db/client';
+import { errorMiddleware } from '../middleware/error';
 
 
 const app = express();
@@ -20,8 +21,12 @@ async function initApp() {
   }
 
   try {
+    app.use(express.json());
+
     // routes
     app.use('/bread-shop/api', router);
+
+    app.use(errorMiddleware);
 
     // start server
     server = app.listen(config.port, config.host);

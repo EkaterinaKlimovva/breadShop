@@ -1,8 +1,8 @@
 import express from 'express';
-import { positionService } from '../services';
+import { positionController } from '../controller';
 
 const router = express.Router();
 
-router.get('/positions', positionService.getPositions);
+router.get('/positions', positionController.getPositions);
 
 export default router;

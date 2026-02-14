@@ -5,8 +5,9 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated"
+  provider        = "prisma-client"
+  output          = "../src/generated"
+  previewFeatures = ["multiSchema"]
 }
 
 datasource db {
@@ -18,7 +19,7 @@ model Position {
   id        Int        @id @default(autoincrement())
   name      String
   cost      Int
-  isActive  Boolean @map("is_active")
+  isActive  Boolean    @map("is_active")
   purchases Purchase[]
 
   @@map("position")
@@ -28,8 +29,8 @@ model Position {
 model Customer {
   id          Int        @id @default(autoincrement())
   name        String
-  sumCost     Int @map("sum_cost")
-  salePrecent Int @map("sale_precent")
+  sumCost     Int        @map("sum_cost")
+  salePrecent Int        @map("sale_precent")
   purchases   Purchase[]
 
   @@map("customer")
